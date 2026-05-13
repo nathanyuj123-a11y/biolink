@@ -6,13 +6,13 @@ import { neon } from "@neondatabase/serverless";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 
-const envFile = process.env.DATABASE_URL ? null : ".env.local";
-if (envFile) {
+for (const envFile of [".env.production", ".env.local"]) {
+  if (process.env.DATABASE_URL) break;
   try {
     const txt = readFileSync(path.resolve(envFile), "utf8");
     for (const line of txt.split(/\r?\n/)) {
-      const m = line.match(/^([A-Z_]+)=(.*)$/);
-      if (m && !process.env[m[1]]) process.env[m[1]] = m[2].replace(/^"|"$/g, "");
+      const m = line.match(/^([A-Z_]+)="?(.*?)"?$/);
+      if (m && !process.env[m[1]]) process.env[m[1]] = m[2];
     }
   } catch {}
 }
