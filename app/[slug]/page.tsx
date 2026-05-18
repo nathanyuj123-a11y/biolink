@@ -146,42 +146,45 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
               href={store.google_review_url}
               target="_blank"
               rel="noopener"
-              className="group flex items-center justify-center gap-2.5 rounded-xl border border-neutral-200 bg-white px-3 py-3.5 shadow-sm transition-all duration-300 hover:border-sagold/60 hover:bg-sagold/[0.06]"
+              className="group grid w-full grid-cols-[44px_1fr_44px] items-center rounded-xl border border-neutral-200 bg-white px-3 py-3.5 shadow-sm transition-all duration-300 hover:border-sagold/60 hover:bg-sagold/[0.06]"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" className="text-sagold" fill="currentColor">
+              <svg width="18" height="18" viewBox="0 0 24 24" className="justify-self-center text-sagold" fill="currentColor">
                 <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z" />
               </svg>
-              <span className="font-montserrat text-[12px] font-semibold tracking-wider text-neutral-900 uppercase leading-none">
+              <span className="font-montserrat text-[12px] font-semibold tracking-wider text-neutral-900 uppercase leading-none text-center">
                 Avalie no Google
               </span>
+              <span />
             </a>
           )}
           <a
             href={whatsappUrl(store.whatsapp)}
             target="_blank"
             rel="noopener"
-            className="group flex items-center justify-center gap-2.5 rounded-xl border border-neutral-200 bg-white px-3 py-3.5 shadow-sm transition-all duration-300 hover:border-emerald-500/60 hover:bg-emerald-50"
+            className="group grid w-full grid-cols-[44px_1fr_44px] items-center rounded-xl border border-neutral-200 bg-white px-3 py-3.5 shadow-sm transition-all duration-300 hover:border-emerald-500/60 hover:bg-emerald-50"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" className="text-emerald-600" fill="currentColor">
+            <svg width="18" height="18" viewBox="0 0 24 24" className="justify-self-center text-emerald-600" fill="currentColor">
               <path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1s-.8.9-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5s.2-.3.3-.5c.1-.2 0-.4 0-.5s-.7-1.7-1-2.3c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5 4.5.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.4c1.4.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z" />
             </svg>
-            <span className="font-montserrat text-[12px] font-semibold tracking-wider text-neutral-900 uppercase leading-none">
-              WhatsApp
+            <span className="font-montserrat text-[12px] font-semibold tracking-wider text-neutral-900 uppercase leading-none text-center">
+              Faça sua reserva
             </span>
+            <span />
           </a>
           <a
             href={store.maps_url}
             target="_blank"
             rel="noopener"
-            className="group flex items-center justify-center gap-2.5 rounded-xl border border-neutral-200 bg-white px-3 py-3.5 shadow-sm transition-all duration-300 hover:border-sky-500/60 hover:bg-sky-50"
+            className="group grid w-full grid-cols-[44px_1fr_44px] items-center rounded-xl border border-neutral-200 bg-white px-3 py-3.5 shadow-sm transition-all duration-300 hover:border-sky-500/60 hover:bg-sky-50"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" className="text-sky-600" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="18" height="18" viewBox="0 0 24 24" className="justify-self-center text-sky-600" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M12 22s-7-7-7-13a7 7 0 0114 0c0 6-7 13-7 13z" strokeLinejoin="round" />
               <circle cx="12" cy="9" r="2.5" />
             </svg>
-            <span className="font-montserrat text-[12px] font-semibold tracking-wider text-neutral-900 uppercase leading-none">
+            <span className="font-montserrat text-[12px] font-semibold tracking-wider text-neutral-900 uppercase leading-none text-center">
               Como chegar
             </span>
+            <span />
           </a>
         </div>
 
