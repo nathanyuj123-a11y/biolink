@@ -57,29 +57,38 @@ export default function StoreForm({ mode, store }: Props) {
   }
 
   return (
-    <main className="min-h-screen px-6 py-10">
-      <div className="max-w-2xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="font-bebas text-4xl tracking-wider text-sared">
-            {mode === "create" ? "NOVA LOJA" : "EDITAR LOJA"}
-          </h1>
-          <Link href="/admin" className="text-neutral-400 hover:text-white">
-            ← Voltar
-          </Link>
+    <>
+      <div className="mb-6 flex items-end justify-between gap-3">
+        <div>
+          <h2 className="text-2xl font-semibold tracking-tight text-ink">
+            {mode === "create" ? "Nova loja" : "Editar loja"}
+          </h2>
+          <p className="mt-1 text-sm text-ash">
+            {mode === "create"
+              ? "Cadastre uma nova unidade da rede"
+              : `Editando ${store?.nome}`}
+          </p>
         </div>
+        <Link
+          href="/admin"
+          className="pressable rounded-lg border border-hairline bg-white px-3.5 py-1.5 text-sm font-medium text-ink-soft hover:bg-slate-50"
+        >
+          ← Voltar
+        </Link>
+      </div>
 
-        <form onSubmit={onSubmit} className="space-y-5">
+      <form onSubmit={onSubmit} className="space-y-4">
+        <Card title="Identificação">
           <Field label="Nome da loja" required>
             <input
               required
               value={form.nome}
               onChange={(e) => set("nome", e.target.value)}
-              placeholder="Casa do Sushi Florianópolis"
+              placeholder="S.A Florianópolis"
               className={inputCls}
             />
           </Field>
-
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-3">
             <div className="col-span-2">
               <Field label="Cidade" required>
                 <input
@@ -100,8 +109,7 @@ export default function StoreForm({ mode, store }: Props) {
               />
             </Field>
           </div>
-
-          <Field label="Marca principal (header)" required>
+          <Field label="Marca principal" required>
             <select
               value={form.marca}
               onChange={(e) => set("marca", e.target.value as typeof form.marca)}
@@ -112,23 +120,20 @@ export default function StoreForm({ mode, store }: Props) {
               <option value="yaki">S.A Casa do Yakisoba</option>
             </select>
           </Field>
-
-          <Field
-            label="Slug (URL pública)"
-            hint="Sem espaços. Ex: 'florianopolis' vira /florianopolis"
-            required
-          >
+          <Field label="Slug (URL pública)" hint="Ex: 'florianopolis' → /florianopolis" required>
             <input
               required
               pattern="[a-z0-9\-]+"
               value={form.slug}
               onChange={(e) => set("slug", e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))}
               placeholder="florianopolis"
-              className={inputCls}
+              className={`${inputCls} font-mono`}
             />
           </Field>
+        </Card>
 
-          <Field label="WhatsApp" hint="Ex: 48999999999 (com DDD)" required>
+        <Card title="Contato e localização">
+          <Field label="WhatsApp" hint="Com DDD. Ex: 48999990000" required>
             <input
               required
               value={form.whatsapp}
@@ -136,7 +141,6 @@ export default function StoreForm({ mode, store }: Props) {
               className={inputCls}
             />
           </Field>
-
           <Field label="Google Maps URL" required>
             <input
               required
@@ -147,65 +151,88 @@ export default function StoreForm({ mode, store }: Props) {
               className={inputCls}
             />
           </Field>
+        </Card>
 
-          <fieldset className="space-y-4 border-t border-neutral-800 pt-5">
-            <legend className="font-bebas tracking-widest text-neutral-400 text-sm">
-              CARDS "CONHEÇA TAMBÉM" (opcional)
-            </legend>
-            <Field label="Link S.A Casa do Sushi">
-              <input
-                type="url"
-                value={form.link_sushi}
-                onChange={(e) => set("link_sushi", e.target.value)}
-                className={inputCls}
-              />
-            </Field>
-            <Field label="Link S.A Casa do Poke">
-              <input
-                type="url"
-                value={form.link_poke}
-                onChange={(e) => set("link_poke", e.target.value)}
-                className={inputCls}
-              />
-            </Field>
-            <Field label="Link S.A Casa do Yakisoba">
-              <input
-                type="url"
-                value={form.link_yaki}
-                onChange={(e) => set("link_yaki", e.target.value)}
-                className={inputCls}
-              />
-            </Field>
-          </fieldset>
+        <Card title="Deliverys (opcional)" subtitle="Cards que aparecem em 'Nossos Deliverys'">
+          <Field label="Link Casa do Sushi">
+            <input
+              type="url"
+              value={form.link_sushi}
+              onChange={(e) => set("link_sushi", e.target.value)}
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Link Casa do Poke">
+            <input
+              type="url"
+              value={form.link_poke}
+              onChange={(e) => set("link_poke", e.target.value)}
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Link Casa do Yakisoba">
+            <input
+              type="url"
+              value={form.link_yaki}
+              onChange={(e) => set("link_yaki", e.target.value)}
+              className={inputCls}
+            />
+          </Field>
+        </Card>
 
-          {error && <p className="text-sared">{error}</p>}
-
-          <div className="flex gap-3 justify-between pt-3">
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg-sared hover:bg-red-700 disabled:opacity-50 px-6 py-3 rounded-lg font-bebas tracking-widest"
-            >
-              {loading ? "SALVANDO..." : "SALVAR"}
-            </button>
-            {mode === "edit" && (
-              <button
-                type="button"
-                onClick={onDelete}
-                className="border border-red-900 text-sared hover:bg-red-950 px-6 py-3 rounded-lg font-bebas tracking-widest"
-              >
-                APAGAR
-              </button>
-            )}
+        {error && (
+          <div className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-medium text-rose-700">
+            {error}
           </div>
-        </form>
-      </div>
-    </main>
+        )}
+
+        <div className="flex items-center justify-between gap-3 pt-2">
+          {mode === "edit" ? (
+            <button
+              type="button"
+              onClick={onDelete}
+              className="pressable rounded-lg border border-rose-200 bg-white px-3.5 py-2 text-sm font-medium text-rose-700 hover:bg-rose-50"
+            >
+              Apagar loja
+            </button>
+          ) : (
+            <span />
+          )}
+          <button
+            type="submit"
+            disabled={loading}
+            className="pressable rounded-lg bg-ink px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50"
+          >
+            {loading ? "Salvando..." : "Salvar"}
+          </button>
+        </div>
+      </form>
+    </>
   );
 }
 
 const inputCls =
-  "w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 outline-none focus:border-sared";
+  "w-full rounded-lg border border-hairline bg-white px-3 py-2 text-sm text-ink outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-200";
+
+function Card({
+  title,
+  subtitle,
+  children,
+}: {
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="rounded-2xl border border-hairline bg-white p-5 sm:p-6">
+      <div className="mb-4">
+        <h3 className="text-sm font-semibold text-ink">{title}</h3>
+        {subtitle && <p className="mt-0.5 text-xs text-ash">{subtitle}</p>}
+      </div>
+      <div className="space-y-3">{children}</div>
+    </section>
+  );
+}
 
 function Field({
   label,
@@ -220,11 +247,11 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="block text-sm text-neutral-300 mb-1">
-        {label} {required && <span className="text-sared">*</span>}
+      <span className="mb-1 block text-[11px] font-semibold uppercase tracking-wider text-ash">
+        {label} {required && <span className="text-rose-500">*</span>}
       </span>
       {children}
-      {hint && <span className="block text-xs text-neutral-500 mt-1">{hint}</span>}
+      {hint && <span className="mt-1 block text-xs text-ash">{hint}</span>}
     </label>
   );
 }

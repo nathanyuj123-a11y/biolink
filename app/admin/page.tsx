@@ -1,81 +1,97 @@
 import Link from "next/link";
 import { listStores } from "@/lib/db";
 import { headers } from "next/headers";
+import AdminShell from "./admin-shell";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminHome() {
   const stores = await listStores();
   const h = await headers();
-  const host = h.get("host") || "localhost:3000";
+  const host = h.get("host") || "localhost:3100";
   const proto = host.startsWith("localhost") ? "http" : "https";
   const baseUrl = `${proto}://${host}`;
 
-  return (
-    <main className="min-h-screen px-6 py-10">
-      <div className="max-w-3xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="font-bebas text-4xl tracking-wider text-sared">PAINEL · LOJAS</h1>
-          <div className="flex gap-3">
-            <Link
-              href="/admin/nova"
-              className="bg-sared hover:bg-red-700 transition rounded-lg px-4 py-2 font-bebas tracking-widest"
-            >
-              + NOVA LOJA
-            </Link>
-            <form action="/api/auth/logout" method="POST">
-              <button className="border border-neutral-800 hover:bg-neutral-900 rounded-lg px-4 py-2 font-bebas tracking-widest">
-                SAIR
-              </button>
-            </form>
-          </div>
-        </div>
+  const totalFilled = stores.filter((s) => s.whatsapp && s.maps_url).length;
 
-        {stores.length === 0 ? (
-          <div className="border border-dashed border-neutral-800 rounded-xl p-10 text-center text-neutral-500">
-            Nenhuma loja cadastrada ainda. Clique em <strong>+ Nova Loja</strong>.
-          </div>
-        ) : (
-          <ul className="space-y-3">
-            {stores.map((s) => (
+  return (
+    <AdminShell>
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h2 className="text-2xl font-semibold tracking-tight text-ink">Lojas</h2>
+          <p className="mt-1 text-sm text-ash">
+            {stores.length} unidades · {totalFilled} completas · {stores.length - totalFilled} pendentes
+          </p>
+        </div>
+        <Link
+          href="/admin/nova"
+          className="pressable inline-flex items-center gap-2 rounded-lg bg-ink px-3.5 py-2 text-sm font-medium text-white hover:bg-slate-800"
+        >
+          <span className="text-base leading-none">+</span> Nova loja
+        </Link>
+      </div>
+
+      {stores.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-hairline bg-white p-10 text-center text-sm text-ash">
+          Nenhuma loja cadastrada ainda.
+        </div>
+      ) : (
+        <ul className="grid gap-3 sm:grid-cols-2">
+          {stores.map((s) => {
+            const isComplete = !!s.whatsapp && !!s.maps_url;
+            return (
               <li
                 key={s.id}
-                className="bg-neutral-900 border border-neutral-800 rounded-xl p-4 flex items-center justify-between"
+                className="group rounded-2xl border border-hairline bg-white p-4 transition hover:shadow-sm"
               >
-                <div>
-                  <p className="font-bebas text-2xl tracking-wider">{s.nome}</p>
-                  <p className="text-sm text-neutral-400">
-                    {s.cidade} · {s.uf} · /{s.slug}
-                  </p>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold text-ink">{s.nome}</p>
+                    <p className="mt-0.5 truncate text-xs text-ash">
+                      {s.cidade} · {s.uf} · <span className="font-mono">/{s.slug}</span>
+                    </p>
+                  </div>
+                  {isComplete ? (
+                    <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700 ring-1 ring-emerald-100">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                      Completa
+                    </span>
+                  ) : (
+                    <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-700 ring-1 ring-amber-100">
+                      <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+                      Pendente
+                    </span>
+                  )}
                 </div>
-                <div className="flex gap-2">
+
+                <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                  <Link
+                    href={`/admin/${s.id}`}
+                    className="pressable rounded-md border border-hairline bg-white px-2.5 py-1.5 text-xs font-medium text-ink-soft hover:bg-slate-50"
+                  >
+                    Editar
+                  </Link>
                   <a
                     href={`/${s.slug}`}
                     target="_blank"
                     rel="noopener"
-                    className="text-sm border border-neutral-700 hover:bg-neutral-800 rounded-lg px-3 py-2"
+                    className="pressable rounded-md border border-hairline bg-white px-2.5 py-1.5 text-xs font-medium text-ink-soft hover:bg-slate-50"
                   >
-                    Ver
+                    Abrir
                   </a>
                   <button
                     type="button"
                     data-copy={`${baseUrl}/${s.slug}`}
-                    className="copy-link text-sm border border-neutral-700 hover:bg-neutral-800 rounded-lg px-3 py-2"
+                    className="copy-link pressable rounded-md border border-hairline bg-white px-2.5 py-1.5 text-xs font-medium text-ink-soft hover:bg-slate-50"
                   >
                     Copiar link
                   </button>
-                  <Link
-                    href={`/admin/${s.id}`}
-                    className="text-sm bg-neutral-800 hover:bg-neutral-700 rounded-lg px-3 py-2"
-                  >
-                    Editar
-                  </Link>
                 </div>
               </li>
-            ))}
-          </ul>
-        )}
-      </div>
+            );
+          })}
+        </ul>
+      )}
 
       <script
         dangerouslySetInnerHTML={{
@@ -92,6 +108,6 @@ export default async function AdminHome() {
           `,
         }}
       />
-    </main>
+    </AdminShell>
   );
 }

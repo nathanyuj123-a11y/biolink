@@ -1,5 +1,10 @@
 import StoreForm from "../store-form";
+import AdminShell from "../admin-shell";
 
 export default function NovaLojaPage() {
-  return <StoreForm mode="create" />;
+  return (
+    <AdminShell>
+      <StoreForm mode="create" />
+    </AdminShell>
+  );
 }

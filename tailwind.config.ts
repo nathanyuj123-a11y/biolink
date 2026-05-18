@@ -7,11 +7,17 @@ export default {
       colors: {
         sared: "#C8102E",
         sabg: "#0d0d0d",
+        ink: "#0f172a",
+        "ink-soft": "#334155",
+        ash: "#64748b",
+        canvas: "#f8fafc",
+        hairline: "#e5e7eb",
       },
       fontFamily: {
         bebas: ["var(--font-bebas)"],
         dm: ["var(--font-dm)"],
         mono: ["var(--font-mono)"],
+        geist: ["var(--font-geist)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       keyframes: {
         marquee: {
