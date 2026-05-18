@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getStoreBySlug } from "@/lib/db";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 function whatsappUrl(raw: string): string {
   const digits = raw.replace(/\D/g, "");

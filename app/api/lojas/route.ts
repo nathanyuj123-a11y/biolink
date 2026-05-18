@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { createStore, getStoreBySlug } from "@/lib/db";
 import { isLoggedIn } from "@/lib/auth";
 
@@ -12,5 +13,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Slug já existe" }, { status: 409 });
   }
   const s = await createStore(body);
+  revalidatePath(`/${s.slug}`);
   return NextResponse.json(s);
 }
