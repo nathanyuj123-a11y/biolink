@@ -56,7 +56,15 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
 
         {/* Deliverys — destaque */}
         {deliverys.length > 0 && (
-          <div className="mt-7 space-y-2.5">
+          <>
+            <div className="mt-7 mb-3 flex items-center justify-center gap-3">
+              <span className="h-px w-8 bg-sared/60" />
+              <span className="font-bebas text-base tracking-[0.35em] text-sared">
+                PEÇA AGORA
+              </span>
+              <span className="h-px w-8 bg-sared/60" />
+            </div>
+          <div className="space-y-2.5">
             {deliverys.map((c) => (
               <a
                 key={c.key}
@@ -67,8 +75,8 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
               >
                 <span className="absolute inset-y-0 left-0 w-px bg-white/20" />
                 <div className="text-left min-w-0">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/70">
-                    Quero pedir agora
+                  <p className="font-bebas text-xs tracking-[0.35em] text-white">
+                    QUERO PEDIR AGORA
                   </p>
                   <p className="font-bebas text-xl tracking-[0.05em] text-white leading-none mt-1 truncate">
                     Delivery {c.label}
@@ -88,6 +96,7 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
               </a>
             ))}
           </div>
+          </>
         )}
 
         {/* Google review */}
