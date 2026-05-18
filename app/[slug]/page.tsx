@@ -3,12 +3,6 @@ import { getStoreBySlug } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
-const BRAND_LABEL: Record<string, string> = {
-  sushi: "Casa do Sushi",
-  poke: "Casa do Poke",
-  yaki: "Casa do Yakisoba",
-};
-
 function whatsappUrl(raw: string): string {
   const digits = raw.replace(/\D/g, "");
   if (raw.startsWith("http")) return raw;
@@ -21,16 +15,15 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
   const store = await getStoreBySlug(slug);
   if (!store) notFound();
 
-  const cards = [
-    { key: "sushi", label: "Casa do Sushi", url: store.link_sushi },
-    { key: "poke", label: "Casa do Poke", url: store.link_poke },
-    { key: "yaki", label: "Casa do Yakisoba", url: store.link_yaki },
-    { key: "burguer", label: "Casa do Burguer", url: store.link_burguer },
+  const deliverys = [
+    { key: "sushi", label: "S.A Casa do Sushi", url: store.link_sushi },
+    { key: "poke", label: "S.A Casa do Poke", url: store.link_poke },
+    { key: "yaki", label: "S.A Casa do Yakisoba", url: store.link_yaki },
+    { key: "burguer", label: "S.A Casa do Burguer", url: store.link_burguer },
   ].filter((c) => c.url);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#0d0d0d]">
-      {/* Soft warm glow at top */}
       <div
         className="pointer-events-none absolute inset-0 z-0"
         style={{
@@ -38,7 +31,6 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
             "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(200,16,46,0.07) 0%, transparent 70%)",
         }}
       />
-      {/* Very subtle grain */}
       <div className="grain pointer-events-none fixed inset-0 z-50 mix-blend-overlay" />
 
       <main className="relative z-10 mx-auto flex min-h-screen w-full max-w-[460px] flex-col items-center px-6 pb-14 pt-12">
@@ -64,44 +56,45 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
           <span className="h-px w-6 bg-neutral-700" />
         </div>
 
-        {/* Marcas */}
-        {cards.length > 0 && (
+        {/* Deliverys (destaque principal) */}
+        {deliverys.length > 0 && (
           <>
-            <div className="mb-5 flex w-full items-center gap-3">
+            <div className="mb-4 flex w-full items-center gap-3">
               <span className="h-px flex-1 bg-neutral-800" />
               <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-neutral-500">
-                Nossos Deliverys
+                Peça agora
               </span>
               <span className="h-px flex-1 bg-neutral-800" />
             </div>
 
-            <div className="w-full space-y-2.5">
-              {cards.map((c) => (
+            <div className="w-full space-y-3">
+              {deliverys.map((c) => (
                 <a
                   key={c.key}
                   href={c.url!}
                   target="_blank"
                   rel="noopener"
-                  className="group relative flex items-center justify-between rounded-xl border border-neutral-800 bg-neutral-950/60 px-5 py-4 transition-all duration-300 hover:border-sared/60 hover:bg-neutral-900"
+                  className="group relative flex w-full items-center justify-between overflow-hidden rounded-2xl bg-sared px-6 py-5 transition-all duration-300 hover:bg-[#a30d24] hover:shadow-[0_12px_30px_-10px_rgba(200,16,46,0.55)]"
                 >
-                  <div className="flex items-center gap-4">
-                    <span className="h-1.5 w-1.5 rounded-full bg-sared/70 transition-all duration-300 group-hover:scale-150 group-hover:bg-sared" />
-                    <span className="font-bebas text-xl tracking-[0.08em] text-neutral-100">
-                      S.A {c.label.toUpperCase()}
-                      <span className="text-sared/80"> · </span>
-                      <span className="text-neutral-400">DELIVERY</span>
-                    </span>
+                  <span className="absolute inset-y-0 left-0 w-px bg-white/20" />
+                  <div className="text-left">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/70">
+                      Quero pedir agora
+                    </p>
+                    <p className="font-bebas text-2xl tracking-[0.06em] text-white leading-none mt-1">
+                      Delivery {c.label}
+                    </p>
                   </div>
                   <svg
-                    width="16"
-                    height="16"
+                    width="22"
+                    height="22"
                     viewBox="0 0 24 24"
-                    className="text-neutral-500 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-sared"
+                    className="shrink-0 text-white transition-transform duration-300 group-hover:translate-x-1"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.5"
                   >
-                    <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </a>
               ))}
@@ -109,61 +102,77 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
           </>
         )}
 
-        {/* Main actions */}
-        <div className="w-full space-y-3 mt-10">
+        {/* Google review */}
+        {store.google_review_url && (
+          <a
+            href={store.google_review_url}
+            target="_blank"
+            rel="noopener"
+            className="group mt-8 flex w-full items-center justify-between rounded-2xl border border-amber-500/30 bg-amber-500/[0.06] px-6 py-4 transition-all duration-300 hover:border-amber-400/60 hover:bg-amber-500/[0.12]"
+          >
+            <div className="text-left flex items-center gap-3">
+              <svg width="22" height="22" viewBox="0 0 24 24" className="text-amber-400" fill="currentColor">
+                <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z" />
+              </svg>
+              <div>
+                <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-amber-300/70">
+                  Sua opinião conta
+                </p>
+                <p className="font-bebas text-xl tracking-[0.06em] text-amber-100 leading-none mt-1">
+                  Avalie nossa loja no Google
+                </p>
+              </div>
+            </div>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              className="shrink-0 text-amber-300/70 transition-transform duration-300 group-hover:translate-x-0.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
+        )}
+
+        {/* Secundários: WhatsApp + Como chegar */}
+        <div className="mt-10 mb-5 flex w-full items-center gap-3">
+          <span className="h-px flex-1 bg-neutral-800" />
+          <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-neutral-500">
+            Fale com a unidade
+          </span>
+          <span className="h-px flex-1 bg-neutral-800" />
+        </div>
+
+        <div className="w-full grid grid-cols-2 gap-2.5">
           <a
             href={whatsappUrl(store.whatsapp)}
             target="_blank"
             rel="noopener"
-            className="group relative flex w-full items-center justify-between overflow-hidden rounded-2xl bg-sared px-6 py-5 transition-all duration-300 hover:bg-[#a30d24] hover:shadow-[0_12px_30px_-10px_rgba(200,16,46,0.55)]"
+            className="group flex flex-col items-center justify-center gap-1.5 rounded-xl border border-neutral-800 bg-neutral-950/60 px-4 py-4 transition-all duration-300 hover:border-neutral-600 hover:bg-neutral-900"
           >
-            <span className="absolute inset-y-0 left-0 w-px bg-white/20" />
-            <div className="text-left">
-              <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/70">
-                Contato
-              </p>
-              <p className="font-bebas text-3xl tracking-[0.06em] text-white leading-none mt-1">
-                WhatsApp
-              </p>
-            </div>
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              className="text-white transition-transform duration-300 group-hover:translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+            <svg width="22" height="22" viewBox="0 0 24 24" className="text-emerald-400" fill="currentColor">
+              <path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1s-.8.9-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5s.2-.3.3-.5c.1-.2 0-.4 0-.5s-.7-1.7-1-2.3c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5 4.5.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.4c1.4.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z" />
             </svg>
+            <span className="font-bebas text-lg tracking-[0.08em] text-neutral-200 leading-none">
+              WhatsApp
+            </span>
           </a>
-
           <a
             href={store.maps_url}
             target="_blank"
             rel="noopener"
-            className="group relative flex w-full items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-950 px-6 py-5 transition-all duration-300 hover:border-neutral-600 hover:bg-neutral-900"
+            className="group flex flex-col items-center justify-center gap-1.5 rounded-xl border border-neutral-800 bg-neutral-950/60 px-4 py-4 transition-all duration-300 hover:border-neutral-600 hover:bg-neutral-900"
           >
-            <div className="text-left">
-              <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-neutral-500">
-                Endereço
-              </p>
-              <p className="font-bebas text-3xl tracking-[0.06em] text-neutral-100 leading-none mt-1">
-                Como chegar
-              </p>
-            </div>
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              className="text-neutral-300 transition-transform duration-300 group-hover:translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+            <svg width="22" height="22" viewBox="0 0 24 24" className="text-sky-400" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M12 22s-7-7-7-13a7 7 0 0114 0c0 6-7 13-7 13z" strokeLinejoin="round" />
+              <circle cx="12" cy="9" r="2.5" />
             </svg>
+            <span className="font-bebas text-lg tracking-[0.08em] text-neutral-200 leading-none">
+              Como chegar
+            </span>
           </a>
         </div>
 

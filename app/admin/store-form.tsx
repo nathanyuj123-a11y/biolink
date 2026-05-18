@@ -20,6 +20,7 @@ export default function StoreForm({ mode, store }: Props) {
     link_poke: store?.link_poke ?? "",
     link_yaki: store?.link_yaki ?? "",
     link_burguer: store?.link_burguer ?? "",
+    google_review_url: store?.google_review_url ?? "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -149,6 +150,15 @@ export default function StoreForm({ mode, store }: Props) {
               value={form.maps_url}
               onChange={(e) => set("maps_url", e.target.value)}
               placeholder="https://maps.google.com/..."
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Link de avaliação no Google" hint="Link 'deixar avaliação' do Google Maps">
+            <input
+              type="url"
+              value={form.google_review_url}
+              onChange={(e) => set("google_review_url", e.target.value)}
+              placeholder="https://g.page/r/..."
               className={inputCls}
             />
           </Field>
