@@ -2,6 +2,7 @@ import Link from "next/link";
 import { listStores } from "@/lib/db";
 import { headers } from "next/headers";
 import AdminShell from "./admin-shell";
+import CopyLinkButton from "./copy-link-button";
 
 export const dynamic = "force-dynamic";
 
@@ -79,13 +80,7 @@ export default async function AdminHome() {
                   >
                     Abrir
                   </a>
-                  <button
-                    type="button"
-                    data-copy={`${baseUrl}/${s.slug}`}
-                    className="copy-link pressable rounded-md border border-hairline bg-white px-2.5 py-1.5 text-xs font-medium text-ink-soft hover:bg-slate-50"
-                  >
-                    Copiar link
-                  </button>
+                  <CopyLinkButton url={`${baseUrl}/${s.slug}`} />
                 </div>
               </li>
             );
@@ -93,21 +88,6 @@ export default async function AdminHome() {
         </ul>
       )}
 
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            document.querySelectorAll('.copy-link').forEach(b => {
-              b.addEventListener('click', async () => {
-                const url = b.getAttribute('data-copy');
-                await navigator.clipboard.writeText(url);
-                const old = b.textContent;
-                b.textContent = 'Copiado!';
-                setTimeout(() => b.textContent = old, 1500);
-              });
-            });
-          `,
-        }}
-      />
     </AdminShell>
   );
 }
