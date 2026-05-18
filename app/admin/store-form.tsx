@@ -21,6 +21,7 @@ export default function StoreForm({ mode, store }: Props) {
     link_yaki: store?.link_yaki ?? "",
     link_burguer: store?.link_burguer ?? "",
     google_review_url: store?.google_review_url ?? "",
+    lista_espera_url: store?.lista_espera_url ?? "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -160,6 +161,15 @@ export default function StoreForm({ mode, store }: Props) {
               value={form.google_review_url}
               onChange={(e) => set("google_review_url", e.target.value)}
               placeholder="https://g.page/r/..."
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Lista de espera virtual" hint="Opcional — link da lista de espera (se a loja usar)">
+            <input
+              type="url"
+              value={form.lista_espera_url}
+              onChange={(e) => set("lista_espera_url", e.target.value)}
+              placeholder="https://..."
               className={inputCls}
             />
           </Field>

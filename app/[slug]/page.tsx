@@ -141,6 +141,23 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
 
         {/* Secundários — padronizados */}
         <div className="mt-3 space-y-2.5">
+          {store.lista_espera_url && (
+            <a
+              href={store.lista_espera_url}
+              target="_blank"
+              rel="noopener"
+              className="group grid w-full grid-cols-[44px_1fr_44px] items-center rounded-xl border border-neutral-200 bg-white px-3 py-3.5 shadow-sm transition-all duration-300 hover:border-sared/60 hover:bg-sared/[0.05]"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" className="justify-self-center text-sared" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span className="font-montserrat text-[12px] font-semibold tracking-wider text-neutral-900 uppercase leading-none text-center">
+                Lista de espera
+              </span>
+              <span />
+            </a>
+          )}
           {store.google_review_url && (
             <a
               href={store.google_review_url}

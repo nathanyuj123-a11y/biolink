@@ -24,6 +24,7 @@ export type Store = {
   link_yaki: string | null;
   link_burguer: string | null;
   google_review_url: string | null;
+  lista_espera_url: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -54,6 +55,7 @@ async function ensureSchema(): Promise<void> {
       `;
       await getSql()`ALTER TABLE stores ADD COLUMN IF NOT EXISTS link_burguer TEXT`;
       await getSql()`ALTER TABLE stores ADD COLUMN IF NOT EXISTS google_review_url TEXT`;
+      await getSql()`ALTER TABLE stores ADD COLUMN IF NOT EXISTS lista_espera_url TEXT`;
     })();
   }
   await initPromise;
@@ -74,6 +76,7 @@ function plainStore(r: Record<string, unknown>): Store {
     link_yaki: (r.link_yaki as string) ?? null,
     link_burguer: (r.link_burguer as string) ?? null,
     google_review_url: (r.google_review_url as string) ?? null,
+    lista_espera_url: (r.lista_espera_url as string) ?? null,
     created_at: String(r.created_at),
     updated_at: String(r.updated_at),
   };
@@ -100,9 +103,9 @@ export async function getStoreById(id: number): Promise<Store | null> {
 export async function createStore(s: StoreInput): Promise<Store> {
   await ensureSchema();
   const rows = (await getSql()`
-    INSERT INTO stores (slug, nome, cidade, uf, marca, whatsapp, maps_url, link_sushi, link_poke, link_yaki, link_burguer, google_review_url)
+    INSERT INTO stores (slug, nome, cidade, uf, marca, whatsapp, maps_url, link_sushi, link_poke, link_yaki, link_burguer, google_review_url, lista_espera_url)
     VALUES (${s.slug}, ${s.nome}, ${s.cidade}, ${s.uf}, ${s.marca}, ${s.whatsapp},
-            ${s.maps_url}, ${s.link_sushi ?? null}, ${s.link_poke ?? null}, ${s.link_yaki ?? null}, ${s.link_burguer ?? null}, ${s.google_review_url ?? null})
+            ${s.maps_url}, ${s.link_sushi ?? null}, ${s.link_poke ?? null}, ${s.link_yaki ?? null}, ${s.link_burguer ?? null}, ${s.google_review_url ?? null}, ${s.lista_espera_url ?? null})
     RETURNING *
   `) as Record<string, unknown>[];
   return plainStore(rows[0]);
@@ -124,6 +127,7 @@ export async function updateStore(id: number, s: StoreInput): Promise<Store> {
       link_yaki = ${s.link_yaki ?? null},
       link_burguer = ${s.link_burguer ?? null},
       google_review_url = ${s.google_review_url ?? null},
+      lista_espera_url = ${s.lista_espera_url ?? null},
       updated_at = NOW()
     WHERE id = ${id}
     RETURNING *
