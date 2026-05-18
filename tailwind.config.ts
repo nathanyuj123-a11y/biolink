@@ -5,8 +5,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        sared: "#C8102E",
-        sabg: "#0d0d0d",
+        sared: "#d30303",
+        sared_deep: "#a30202",
+        sabg: "#000000",
+        sagold: "#d4af37",
+        saolive: "#7d7237",
+        sagray: "#d3d3d3",
         ink: "#0f172a",
         "ink-soft": "#334155",
         ash: "#64748b",
@@ -17,6 +21,9 @@ export default {
         bebas: ["var(--font-bebas)"],
         dm: ["var(--font-dm)"],
         mono: ["var(--font-mono)"],
+        sans: ["var(--font-montserrat)", "ui-sans-serif", "system-ui", "sans-serif"],
+        montserrat: ["var(--font-montserrat)", "ui-sans-serif", "system-ui", "sans-serif"],
+        impact: ["var(--font-oswald)", "Impact", "Haettenschweiler", "Arial Narrow Bold", "sans-serif"],
         geist: ["var(--font-geist)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       keyframes: {
