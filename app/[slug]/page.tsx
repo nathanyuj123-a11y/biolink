@@ -31,37 +31,36 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
 
   return (
     <div className="relative min-h-[100svh] overflow-hidden bg-white font-montserrat text-neutral-900">
-      {/* Glow vermelho sutil + dourado */}
+      {/* Faixa decorativa seigaiha no topo */}
+      <div
+        aria-hidden
+        className="seigaiha pointer-events-none absolute inset-x-0 top-0 z-0 h-16 opacity-[0.5]"
+        style={{
+          maskImage: "linear-gradient(to bottom, black 0%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 100%)",
+        }}
+      />
+      {/* Faixa decorativa no rodapé */}
+      <div
+        aria-hidden
+        className="seigaiha pointer-events-none absolute inset-x-0 bottom-0 z-0 h-16 opacity-[0.5]"
+        style={{
+          maskImage: "linear-gradient(to top, black 0%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)",
+        }}
+      />
+      {/* Glow sutil */}
       <div
         className="pointer-events-none absolute inset-0 z-0"
         style={{
           background:
-            "radial-gradient(ellipse 70% 50% at 50% -5%, rgba(211,3,3,0.10) 0%, transparent 65%), radial-gradient(ellipse 90% 60% at 50% 110%, rgba(212,175,55,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 40% at 50% 20%, rgba(211,3,3,0.06) 0%, transparent 65%)",
         }}
       />
 
       <main className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[440px] flex-col justify-center px-5 py-8">
-        {/* Header — kamon + logo + cidade */}
+        {/* Header */}
         <header className="relative flex flex-col items-center">
-          {/* Kamon seigaiha disc */}
-          <div
-            aria-hidden
-            className="seigaiha pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.18]"
-            style={{
-              width: 360,
-              height: 360,
-              borderRadius: "9999px",
-              maskImage: "radial-gradient(circle, black 35%, transparent 70%)",
-              WebkitMaskImage: "radial-gradient(circle, black 35%, transparent 70%)",
-            }}
-          />
-          {/* Gold ring */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-sagold/40"
-            style={{ width: 300, height: 300 }}
-          />
-
           <img
             src="/logo.png"
             alt="S.A Franchising"
@@ -127,8 +126,8 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
                         </p>
                       </div>
 
-                      <div className="ml-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-black transition-all duration-300 group-hover:bg-sared group-hover:scale-110">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="text-white transition-transform duration-300 group-hover:translate-x-0.5">
+                      <div className="ml-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-black transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_0_3px_rgba(211,3,3,0.18)]">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" className="text-sared transition-transform duration-300 group-hover:translate-x-0.5">
                           <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </div>
