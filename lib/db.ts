@@ -22,6 +22,7 @@ export type Store = {
   link_sushi: string | null;
   link_poke: string | null;
   link_yaki: string | null;
+  link_burguer: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -45,10 +46,12 @@ async function ensureSchema(): Promise<void> {
           link_sushi TEXT,
           link_poke TEXT,
           link_yaki TEXT,
+          link_burguer TEXT,
           created_at TIMESTAMPTZ DEFAULT NOW(),
           updated_at TIMESTAMPTZ DEFAULT NOW()
         )
       `;
+      await getSql()`ALTER TABLE stores ADD COLUMN IF NOT EXISTS link_burguer TEXT`;
     })();
   }
   await initPromise;
@@ -67,6 +70,7 @@ function plainStore(r: Record<string, unknown>): Store {
     link_sushi: (r.link_sushi as string) ?? null,
     link_poke: (r.link_poke as string) ?? null,
     link_yaki: (r.link_yaki as string) ?? null,
+    link_burguer: (r.link_burguer as string) ?? null,
     created_at: String(r.created_at),
     updated_at: String(r.updated_at),
   };
@@ -93,9 +97,9 @@ export async function getStoreById(id: number): Promise<Store | null> {
 export async function createStore(s: StoreInput): Promise<Store> {
   await ensureSchema();
   const rows = (await getSql()`
-    INSERT INTO stores (slug, nome, cidade, uf, marca, whatsapp, maps_url, link_sushi, link_poke, link_yaki)
+    INSERT INTO stores (slug, nome, cidade, uf, marca, whatsapp, maps_url, link_sushi, link_poke, link_yaki, link_burguer)
     VALUES (${s.slug}, ${s.nome}, ${s.cidade}, ${s.uf}, ${s.marca}, ${s.whatsapp},
-            ${s.maps_url}, ${s.link_sushi ?? null}, ${s.link_poke ?? null}, ${s.link_yaki ?? null})
+            ${s.maps_url}, ${s.link_sushi ?? null}, ${s.link_poke ?? null}, ${s.link_yaki ?? null}, ${s.link_burguer ?? null})
     RETURNING *
   `) as Record<string, unknown>[];
   return plainStore(rows[0]);
@@ -115,6 +119,7 @@ export async function updateStore(id: number, s: StoreInput): Promise<Store> {
       link_sushi = ${s.link_sushi ?? null},
       link_poke = ${s.link_poke ?? null},
       link_yaki = ${s.link_yaki ?? null},
+      link_burguer = ${s.link_burguer ?? null},
       updated_at = NOW()
     WHERE id = ${id}
     RETURNING *

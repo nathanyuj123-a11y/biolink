@@ -25,6 +25,7 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
     { key: "sushi", label: "Casa do Sushi", url: store.link_sushi },
     { key: "poke", label: "Casa do Poke", url: store.link_poke },
     { key: "yaki", label: "Casa do Yakisoba", url: store.link_yaki },
+    { key: "burguer", label: "Casa do Burguer", url: store.link_burguer },
   ].filter((c) => c.url);
 
   return (

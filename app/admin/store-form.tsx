@@ -19,6 +19,7 @@ export default function StoreForm({ mode, store }: Props) {
     link_sushi: store?.link_sushi ?? "",
     link_poke: store?.link_poke ?? "",
     link_yaki: store?.link_yaki ?? "",
+    link_burguer: store?.link_burguer ?? "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -175,6 +176,14 @@ export default function StoreForm({ mode, store }: Props) {
               type="url"
               value={form.link_yaki}
               onChange={(e) => set("link_yaki", e.target.value)}
+              className={inputCls}
+            />
+          </Field>
+          <Field label="Link Casa do Burguer">
+            <input
+              type="url"
+              value={form.link_burguer}
+              onChange={(e) => set("link_burguer", e.target.value)}
               className={inputCls}
             />
           </Field>
