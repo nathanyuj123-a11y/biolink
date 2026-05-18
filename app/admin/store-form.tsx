@@ -153,8 +153,9 @@ export default function StoreForm({ mode, store }: Props) {
               className={inputCls}
             />
           </Field>
-          <Field label="Link de avaliação no Google" hint="Link 'deixar avaliação' do Google Maps">
+          <Field label="Link de avaliação no Google" hint="Link 'deixar avaliação' do Google Maps" required>
             <input
+              required
               type="url"
               value={form.google_review_url}
               onChange={(e) => set("google_review_url", e.target.value)}
