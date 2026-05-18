@@ -63,7 +63,7 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
           />
 
           <img
-            src="/logos/logo.png"
+            src="/logo.png"
             alt="S.A Franchising"
             className="relative w-full max-w-[260px] h-auto object-contain"
           />
@@ -127,7 +127,7 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
                         </p>
                       </div>
 
-                      <div className="ml-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sared transition-all duration-300 group-hover:bg-sared_deep group-hover:scale-110">
+                      <div className="ml-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-black transition-all duration-300 group-hover:bg-sared group-hover:scale-110">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="text-white transition-transform duration-300 group-hover:translate-x-0.5">
                           <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
