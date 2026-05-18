@@ -170,7 +170,7 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
         )}
 
         {/* Secundários */}
-        <div className="mt-3 grid grid-cols-2 gap-2.5">
+        <div className="mt-3 space-y-2.5">
           <a
             href={whatsappUrl(store.whatsapp)}
             target="_blank"
