@@ -16,7 +16,7 @@ export default function LoginPage() {
     const res = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({ username: email, password }),
     });
     setBusy(false);
     if (!res.ok) {
@@ -111,6 +111,7 @@ export default function LoginPage() {
             <input
               type="text"
               autoFocus
+              required
               autoCapitalize="off"
               autoCorrect="off"
               spellCheck={false}

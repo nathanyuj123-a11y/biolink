@@ -35,9 +35,11 @@ export async function isLoggedIn(): Promise<boolean> {
   return verifyToken(c.get(COOKIE_NAME)?.value);
 }
 
-export async function login(password: string): Promise<boolean> {
-  const expected = process.env.ADMIN_PASSWORD;
-  if (!expected || password !== expected) return false;
+export async function login(username: string, password: string): Promise<boolean> {
+  const expectedUser = process.env.ADMIN_USERNAME;
+  const expectedPass = process.env.ADMIN_PASSWORD;
+  if (!expectedPass || password !== expectedPass) return false;
+  if (expectedUser && username.trim().toLowerCase() !== expectedUser.toLowerCase()) return false;
   const c = await cookies();
   c.set(COOKIE_NAME, makeToken(), {
     httpOnly: true,
