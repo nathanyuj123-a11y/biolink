@@ -148,7 +148,7 @@ export default async function BioPage({ params }: { params: Promise<{ slug: stri
               rel="noopener"
               className="group grid w-full grid-cols-[44px_1fr_44px] items-center rounded-xl border border-neutral-200 bg-white px-3 py-3.5 shadow-sm transition-all duration-300 hover:border-sagold/60 hover:bg-sagold/[0.06]"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" className="justify-self-center text-sagold" fill="currentColor">
+              <svg width="18" height="18" viewBox="0 0 24 24" className="justify-self-center text-sared" fill="currentColor">
                 <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z" />
               </svg>
               <span className="font-montserrat text-[12px] font-semibold tracking-wider text-neutral-900 uppercase leading-none text-center">
